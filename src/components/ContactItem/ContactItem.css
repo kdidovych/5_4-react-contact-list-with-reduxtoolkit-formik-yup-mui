@@ -1,0 +1,7 @@
+.contact-list-items .contact {
+    border: var(--border);
+
+    & span {
+        float: right;
+    }
+}

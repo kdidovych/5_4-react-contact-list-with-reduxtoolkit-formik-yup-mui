@@ -1,0 +1,28 @@
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+
+    & .inputs-container {
+        display: flex;
+        flex-direction: column;
+        border: var(--border);
+        padding: var(--gap);
+        row-gap: var(--gap);
+        height: 100%;
+
+        & label {
+            border: var(--border);
+        }
+
+        & input {
+            border: none;
+            height: 100%;
+        }
+    }
+
+    & .form-buttons {
+        margin-top: var(--indent);
+    }
+}

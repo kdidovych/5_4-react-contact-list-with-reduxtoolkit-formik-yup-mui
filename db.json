@@ -1,0 +1,68 @@
+{
+  "contacts": [
+    {
+      "id": "V6rLDf4m-4c",
+      "firstName": "Константин4",
+      "lastName": "Дидович",
+      "email": "didovych.k.v@gmail.com",
+      "phone": "0935678760"
+    },
+    {
+      "id": "fH41b1rj5_o",
+      "firstName": "Barbara",
+      "lastName": "Millersss2225",
+      "email": "kdidovych@binaryanvil.com",
+      "phone": "2015106000"
+    },
+    {
+      "id": "Fq8y-yYGRZM",
+      "firstName": "Barbara",
+      "lastName": "Miller",
+      "email": "kdidovych@binaryanvil.com",
+      "phone": "2015106000"
+    },
+    {
+      "id": "BaQCy5Jjw3A",
+      "firstName": "Костянтин",
+      "lastName": "Дідовичww33",
+      "email": "didovych.k.v@gmail.com",
+      "phone": "0935678760"
+    },
+    {
+      "id": "up5RPd7dR74",
+      "firstName": "Костянтин",
+      "lastName": "Дідович",
+      "email": "didovych.k.v@gmail.com",
+      "phone": "0935678760"
+    },
+    {
+      "id": "HaxbVCsT2F4",
+      "firstName": "Kostiantyn",
+      "lastName": "Didovych222",
+      "email": "kdidovych@binaryanvil.com",
+      "phone": "1111111111"
+    },
+    {
+      "id": "RuOIXgvmwa4",
+      "firstName": "Константин",
+      "lastName": "Дидович",
+      "email": "didovych.k.v@gmail.com",
+      "phone": "0935678760"
+    },
+    {
+      "id": "gVuHW_9JLns",
+      "firstName": "Константин",
+      "lastName": "Дидовичeeee",
+      "email": "didovych.k.v@gmail.com",
+      "phone": "0935678760"
+    },
+    {
+      "id": "GRtaMWtJBmM",
+      "firstName": "Константин",
+      "lastName": "Дидович",
+      "email": "didovych.k.v@gmail.com",
+      "phone": "1234567890"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

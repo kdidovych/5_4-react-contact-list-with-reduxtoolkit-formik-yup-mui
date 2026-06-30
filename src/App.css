@@ -1,0 +1,12 @@
+h1 {
+    text-align: center;
+    border: var(--border);
+    box-sizing: border-box;
+    margin: 0 0 var(--indent);
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    column-gap: var(--gap);
+}

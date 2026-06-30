@@ -1,0 +1,16 @@
+.contact-list-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    & .contact-list-items {
+        display: flex;
+        flex-direction: column;
+        column-gap: var(--gap);
+        row-gap: var(--gap);
+    }
+
+    & .contact-list-buttons {
+        margin-top: var(--indent);
+    }
+}
