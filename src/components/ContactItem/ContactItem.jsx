@@ -1,7 +1,11 @@
-import './ContactItem.css';
 import {useDispatch} from 'react-redux';
 import {deleteContact} from "../../store/slices/contactsSlice.js";
 import {saveEditableContact} from "../../store/reducers/editableContactReducer.js";
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import {deleteIcon, gridBorder, deleteIconButton, contactItem} from '../../styles'
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 
 function ContactItem({contact}) {
     const dispatch = useDispatch();
@@ -11,12 +15,20 @@ function ContactItem({contact}) {
     const onDoubleClick = () => {
         dispatch(saveEditableContact(contact));
     };
-
     return (
-        <div className="contact" onDoubleClick={onDoubleClick}>
-            {`${contact.firstName} ${contact.lastName}`}
-            <span className="X" onClick={onContactDelete}></span>
-        </div>
+        <Grid container sx={{alignItems: 'center', ...gridBorder}}>
+            <Grid size="grow" onDoubleClick={onDoubleClick} sx={contactItem}>
+                <Box component="span">
+                    {`${contact.firstName} ${contact.lastName}`}
+                </Box>
+            </Grid>
+            <Grid>
+                <IconButton aria-label="delete" onClick={onContactDelete} size='small'
+                            sx={deleteIconButton}>
+                    <CloseIcon style={deleteIcon}/>
+                </IconButton>
+            </Grid>
+        </Grid>
     );
 }
 

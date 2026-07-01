@@ -1,9 +1,18 @@
 import {useEffect} from "react";
 import {useDispatch, useSelector} from 'react-redux';
-import './ContactForm.css';
 import {addContact, updateContact, deleteContact} from "../../store/slices/contactsSlice.js";
-import {Formik, Form, Field} from 'formik';
+import {Formik, Form} from 'formik';
 import {object, string} from 'yup';
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
+import Container from "@mui/material/Container";
+import IconButton from '@mui/material/IconButton';
+import TextField from '@mui/material/TextField';
+import CloseIcon from '@mui/icons-material/Close';
+import {deleteIcon, deleteIconButton, textField} from '../../styles';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControl from '@mui/material/FormControl';
 
 export default function ContactForm() {
     const contact = useSelector(state => state.editableContact.item);
@@ -18,95 +27,199 @@ export default function ContactForm() {
             .matches(/^(\+\d{12})|(\d{10})$/, 'Phone number must be "+{12digits}" or "{10digits}"')
     });
     return (
-        <section className="contact-form-section">
-            <Formik
-                enableReinitialize={true}
-                initialValues={{
-                    firstName: contact.firstName,
-                    lastName: contact.lastName,
-                    email: contact.email,
-                    phone: contact.phone,
-                }}
-                onSubmit={async (values, actions) => {
-                    const updatedContact = {...contact, ...values}
-                    if (contact.id) {
-                        dispatch(updateContact(updatedContact));
-                    } else {
-                        dispatch(addContact(updatedContact));
-                    }
-                    actions.setSubmitting(false);
-                }}
-                validate={values => {
-                    const errors = {};
-                    try {
-                        contactSchema.validateSync(values, {abortEarly: false});
-                    } catch (error) {
-                        error.inner.forEach(err => {
-                            errors[err.path] = err.message;
-                        })
-                    }
-                    return errors;
-                }}
-            >
-                {
-                    ({
-                         errors,
-                         touched,
-                         isSubmitting,
-                         setFieldValue
-                     }) => (
-                        <Form className="contact-form">
-                            <div className="inputs-container">
-                                {errors.firstName && touched.firstName &&
-                                    <span className="error-msg">{errors.firstName}</span>}
-                                <label>
-                                    <Field
-                                        type="text"
-                                        name="firstName"
-                                        placeholder="FirstName"/>
-                                    <span className='X' onClick={() => setFieldValue('firstName', '', false)}></span>
-                                </label>
-                                {errors.lastName && touched.lastName &&
-                                    <span className="error-msg">{errors.lastName}</span>}
-                                <label>
-                                    <Field
-                                        type="text"
-                                        name="lastName"
-                                        placeholder="LastName"/>
-                                    <span className='X' onClick={() => setFieldValue('lastName', '', false)}></span>
-                                </label>
-                                {errors.email && touched.email && <span className="error-msg">{errors.email}</span>}
-                                <label>
-                                    <Field
-                                        type="email"
-                                        name="email"
-                                        placeholder="Email"
-                                        autoComplete="on"/>
-                                    <span className='X' onClick={() => setFieldValue('email', '', false)}></span>
-                                </label>
-                                {errors.phone && touched.phone && <span className="error-msg">{errors.phone}</span>}
-                                <label>
-                                    <Field
-                                        type="tel"
-                                        name="phone"
-                                        placeholder="Phone"
-                                        autoComplete="on"/>
-                                    <span className='X' onClick={() => setFieldValue('phone', '', false)}></span>
-                                </label>
-                            </div>
-                            <div className="form-buttons">
-                                {errors.length && 'Validation error occurred'}
-                                {errors.name && <div id="feedback">{errors.name}</div>}
-                                <button type="submit" disabled={isSubmitting}>Save</button>
-                                {contact.id
-                                    ? <button type="button"
-                                              onClick={() => dispatch(deleteContact(contact.id))}>Delete</button>
-                                    : ""
-                                }
-                            </div>
-                        </Form>
-                    )}
-            </Formik>
-        </section>
+        <Formik
+            enableReinitialize={true}
+            initialValues={{
+                firstName: contact.firstName,
+                lastName: contact.lastName,
+                email: contact.email,
+                phone: contact.phone,
+            }}
+            onSubmit={async (values, actions) => {
+                const updatedContact = {...contact, ...values}
+                if (contact.id) {
+                    dispatch(updateContact(updatedContact));
+                } else {
+                    dispatch(addContact(updatedContact));
+                }
+                actions.setSubmitting(false);
+            }}
+            validate={values => {
+                const errors = {};
+                try {
+                    contactSchema.validateSync(values, {abortEarly: false});
+                } catch (error) {
+                    error.inner.forEach(err => {
+                        errors[err.path] = err.message;
+                    })
+                }
+                return errors;
+            }}
+        >
+            {
+                ({
+                     errors,
+                     isSubmitting,
+                     setFieldValue,
+                     values,
+                     handleChange,
+                     handleBlur,
+                 }) => (
+                    <Form className="contact-form" style={{height: '100%'}}>
+                        <Stack spacing={3} sx={{justifyContent: "space-between", padding: "10px", height: "stretch"}}>
+                            <Container className="inputs-container" disableGutters={true}>
+                                <Stack spacing={2}>
+                                    <FormControl size="small" variant="outlined">
+                                        <TextField
+                                            type="text"
+                                            name="firstName"
+                                            label="FirstName"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            value={values.firstName}
+                                            variant="outlined"
+                                            slotProps={{
+                                                inputLabel: {
+                                                    sx: textField,
+                                                },
+                                                input: {
+                                                    sx: textField,
+                                                    endAdornment: (
+                                                        <InputAdornment position="end">
+                                                            <IconButton aria-label="delete"
+                                                                        size='small'
+                                                                        sx={deleteIconButton}
+                                                                        onClick={() => setFieldValue('firstName', '', false)}
+                                                            >
+                                                                <CloseIcon style={deleteIcon}/>
+                                                            </IconButton>
+                                                        </InputAdornment>
+                                                    ),
+                                                },
+                                            }}
+                                            helperText={errors.firstName}
+                                            sx={textField}
+                                        />
+                                    </FormControl>
+                                    <FormControl size="small" variant="outlined">
+                                        <TextField
+                                            type="text"
+                                            name="lastName"
+                                            label="LastName"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            value={values.lastName}
+                                            variant="outlined"
+                                            slotProps={{
+                                                inputLabel: {
+                                                    sx: textField,
+                                                },
+                                                input: {
+                                                    sx: textField,
+                                                    endAdornment: (
+                                                        <InputAdornment position="end">
+                                                            <IconButton aria-label="delete"
+                                                                        size='small'
+                                                                        sx={deleteIconButton}
+                                                                        onClick={() => setFieldValue('lastName', '', false)}
+                                                            >
+                                                                <CloseIcon style={deleteIcon}/>
+                                                            </IconButton>
+                                                        </InputAdornment>
+                                                    ),
+                                                },
+                                            }}
+                                            helperText={errors.lastName}
+                                            sx={textField}
+                                        />
+                                    </FormControl>
+                                    <FormControl size="small" variant="outlined">
+                                        <TextField
+                                            type="email"
+                                            name="email"
+                                            label="Email"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            value={values.email}
+                                            variant="outlined"
+                                            fullWidth
+                                            slotProps={{
+                                                inputLabel: {
+                                                    sx: textField,
+                                                },
+                                                input: {
+                                                    sx: textField,
+                                                    endAdornment: (
+                                                        <InputAdornment position="end">
+                                                            <IconButton aria-label="delete"
+                                                                        size='small'
+                                                                        sx={deleteIconButton}
+                                                                        onClick={() => setFieldValue('email', '', false)}
+                                                            >
+                                                                <CloseIcon style={deleteIcon}/>
+                                                            </IconButton>
+                                                        </InputAdornment>
+                                                    ),
+                                                },
+                                            }}
+                                            helperText={errors.email}
+                                        />
+                                    </FormControl>
+                                    <FormControl size="small" variant="outlined">
+                                        <TextField
+                                            type="tel"
+                                            name="phone"
+                                            label="Phone"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            value={values.phone}
+                                            variant="outlined"
+                                            slotProps={{
+                                                inputHtml: {
+                                                    sx: textField,
+                                                },
+                                                inputLabel: {
+                                                    sx: textField,
+                                                },
+                                                input: {
+                                                    sx: textField,
+                                                    endAdornment: (
+                                                        <InputAdornment position="end">
+                                                            <IconButton aria-label="delete"
+                                                                        size='small'
+                                                                        sx={deleteIconButton}
+                                                                        onClick={() => setFieldValue('phone', '', false)}
+                                                            >
+                                                                <CloseIcon style={deleteIcon}/>
+                                                            </IconButton>
+                                                        </InputAdornment>
+                                                    ),
+                                                },
+                                            }}
+                                            helperText={errors.phone}
+                                        />
+                                    </FormControl>
+                                </Stack>
+                            </Container>
+                            <Container className="form-buttons" disableGutters={true}>
+                                <Grid container sx={{justifyContent: 'space-between'}}>
+                                    <Grid>
+                                        <Button type="submit" variant="contained" disabled={isSubmitting} size='small'>
+                                            Save
+                                        </Button>
+                                    </Grid>
+                                    {contact.id
+                                        ? <Grid><Button type="button"
+                                                        variant="contained"
+                                                        size='small'
+                                                        onClick={() => dispatch(deleteContact(contact.id))}>Delete</Button></Grid>
+                                        : ""
+                                    }
+                                </Grid>
+                            </Container>
+                        </Stack>
+                    </Form>
+                )}
+        </Formik>
     );
 }
