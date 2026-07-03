@@ -16,8 +16,6 @@ import FormControl from '@mui/material/FormControl';
 
 export default function ContactForm() {
     const contact = useSelector(state => state.editableContact.item);
-    useEffect(() => {
-    }, [contact]);
     const dispatch = useDispatch();
     let contactSchema = object({
         firstName: string().required('First Name is required'),
